@@ -1,5 +1,5 @@
 #Building everything
-FROM arm32v6/rover-app:0.0.1
+FROM rover-app:0.0.1
 
 # Add driving_control
 COPY ./driving_control/src/driving_control.cpp /root/workspace/driving_control/src/driving_control.cpp

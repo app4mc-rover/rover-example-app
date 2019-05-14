@@ -1,0 +1,24 @@
+notifications:
+  email:
+    on_success: always # default: change
+    on_failure: always # default: always
+
+sudo: required
+
+services:
+  - docker
+
+before_install:
+  - chmod +x ./.travis/build.sh
+  - ./.travis/build.sh
+
+script:
+  - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
+  # https://blog.hypriot.com/post/setup-simple-ci-pipeline-for-arm-images/
+  - docker run --rm --privileged multiarch/qemu-user-static:register --reset
+  # base app
+  - docker build --platform linux/arm32v6 -f ./docker-rover-app/Dockerfile -t $REPO_BASE/rover-app:0.0.1 -t rover-app:0.0.1 .
+  - docker push $REPO_BASE/rover-app:0.0.1
+  # example app
+  - docker build --platform linux/arm32v6 -f ./docker-rover-example/Dockerfile -t $REPO_BASE/rover-example:0.0.1 .
+  - docker push $REPO_BASE/rover-example:0.0.1

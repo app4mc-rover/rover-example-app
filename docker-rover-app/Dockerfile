@@ -1,7 +1,7 @@
 #Building everything
 FROM tdicola/pi_python_opencv_contrib:3.4.1
 
-COPY qemu-arm-static /usr/bin/qemu-arm-static
+#COPY qemu-arm-static /usr/bin/qemu-arm-static
 
 # Set up a tools dev directory
 RUN mkdir /home/dev
